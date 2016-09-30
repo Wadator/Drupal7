@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function me_menu() {
+ 
+  $items['main-page'] = array(
+    'title' => 'Main page',
+    'page callback' => 'my_first_page',
+    'access callback' => TRUE,
+    'menu_name' => 'main-menu',
+  );
+ 
+  return $items;
+}
+/**
+*function my_first_page
+**/
+function my_first_page(){
+	return t('Hello');
+}
