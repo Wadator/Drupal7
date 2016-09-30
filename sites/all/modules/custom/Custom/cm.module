@@ -1,0 +1,17 @@
+<?php
+/**
+ * Implements hook_menu().
+ */
+function me_menu() {
+ 
+  $items['simple_page'] = array(
+    'title' => 'Simple page',
+    'page callback' => 'me_simple_page_content',
+    'access callback' => TRUE,
+    'menu_name' => 'main-menu',
+    'file' => 'me.pages.inc',
+    'options' => array('attributes' => array('class' => array('test-class'))),
+  );
+ 
+  return $items;
+}
