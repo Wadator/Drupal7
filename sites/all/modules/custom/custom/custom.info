@@ -1,4 +1,0 @@
-name = Menu example
-description = Examples of using hook_menu()
-core = 7.x
-
