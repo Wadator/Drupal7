@@ -1,0 +1,10 @@
+<?php
+function mymodule_menu(){
+	$items['main-page'] = array(
+	'title' => 'Main page',
+	'page callback' => 'mymodule_main_page_content',
+	'access callback' => TRUE,
+	'menu_name' => 'main-menu',
+	);
+	return $items;
+}
