@@ -1,7 +1,7 @@
 ; $Id: ninesixty.info,v 1.1.2.5.4.2 2011/01/11 01:08:49 dvessel Exp $
 
 name = My theme
-description = A blank base theme using the 960 Grid System. See the "README.txt" file within the theme folder for more information.
+description = my theme
 screenshot = images/screenshot.png
 core = 7.x
 engine = phptemplate
