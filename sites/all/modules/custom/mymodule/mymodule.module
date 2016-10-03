@@ -37,3 +37,49 @@
  function mymodule_found_page(){
  	return t('');
  }
+
+ /**
+ *	Implements hook_block_info
+ */
+
+ function mymodule_block_info(){
+ 	$blocks['message'] = array(
+ 	'info' => t('Message'),
+ 	'visibility' => BLOCK_VISIBILITY_NOTLISTED
+ 	);
+ 	return $blocks;
+ }
+
+/**
+* Implements hook_block_view
+* Generate title and content
+*/
+
+ function mymodule_block_view($delta = ''){
+ 	$block = array();
+
+ 	if($delta == 'message'){
+ 		$block['subject'] = t('Message');
+ 		if(user_access('view block example')){
+ 			$block['content'] = t('Hello i block');
+ 		}
+ 		else{
+ 			$block['content'] = t('access to view this content is denied.');
+ 		}
+ 	}
+
+ 	return $block;
+ }
+
+ /**
+* Implements hook_permission
+**/
+
+function mymodule_permission(){
+	return array('view block example'
+	 => array(
+	 	'title' => t('Block access'),
+	 	'description' => t('Block access description')
+	),
+	);
+}
