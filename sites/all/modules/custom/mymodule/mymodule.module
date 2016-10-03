@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+ function mymodule_menu(){
+ 	$items['main-page'] = array(
+ 	'title' => 'Main page',
+ 	'page callback' => 'mymodule_page',
+ 	'access callback' => TRUE,
+ 	'manu_name' => 'main-menu'
+ 	);
+ 	$items['access-denied'] = array(
+ 	'title' => 'Access denied',
+ 	'page callback' => 'mymodule_access_page',
+ 	'access callback' => FALSE
+ 	);
+ 	$items['not-found'] = array(
+ 	'title' => 'Page not found',
+ 	'page callback' => 'mymodule_found_page',
+ 	'access callback' => FALSE
+ 	);
+ 	return $items;
+ }
+
+/**
+ * mymodule_page content
+*/
+ function mymodule_page(){
+ 	return t('I main page');
+ }
+
+ function mymodule_access_page(){
+ 	return t('');
+ }
+
+ function mymodule_found_page(){
+ 	return t('');
+ }
