@@ -1,0 +1,133 @@
+<?php
+/**
+* Implement hook_menu()
+*/
+function my_forms_menu(){
+	$items['contact-form'] = array(
+		'title' => t('My form4'),
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('my_forms_form'),
+		'access callback' => TRUE,
+		'type' => MENU_CALLBACK,
+	);
+	return $items;
+}
+/**
+* Form Api
+*/
+function my_forms_form($form, &$form_state){
+
+		$form['first'] = array(
+		'#type' => 'textfield',
+		'#title' => t('First name'),
+		'#description' => "Please enter your first name.",
+		'#size' => 20,
+		// '#maxlength' => 20,
+		);
+
+		$form['last'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Last name'),
+		'#size' => 20,
+		'#description' => "Please enter your last name.",
+		);
+
+		$form['nickname'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Nickname'),
+		'#description' => "Please enter your nickname.",
+		'#size' => 20,
+		'#required' => TRUE,
+		);
+
+		$form['email'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('E-mail'),
+	    '#required' => TRUE,
+	    '#default_value' => "",
+	    '#description' => "Please enter your e-mail.",
+	    '#size' => 20,
+	    '#maxlength' => 20,
+	  	);
+
+  		$form['phone'] = array(
+    	'#type' => 'textfield',
+    	'#title' => t('Phone number'),
+    	'#size' => 20,
+	    // '#maxlength' => 3,
+	    '#required' => TRUE,
+	    '#description' => "Please select you phone number format +xxx-xxx-nnnn-nn",
+	  	);
+
+	  	$form['settings'] = array(
+		'#type' => 'radios',
+		'#title' => t('Sex'),
+		'#options' => array('Male' => t('Male'), 'Female' => t('Female')),
+    	);
+
+    	$form['country'] = array(
+    	'#type' => 'select',
+    	'#options' => array('Ukraine' => t('Ukraine'),'USA' => t('USA'), 'Russia' => 'Russia'),
+    	'#title' => t('Country'),
+  		);
+
+  		$form['message'] = array(
+  		'#type' => 'textarea',
+  		'#title' => t('Message'),
+  		'#required' => TRUE,
+  		);
+
+
+  		$form['rule'] = array(
+        '#type' => 'checkbox',
+  		'#title' => t('I agree to the Terms and Conditions'),
+        '#return_value' => 1,
+        '#default_value' => 0,
+  			);
+	    $form['contact'] = array(
+		'#type' => 'fieldset',
+		'#title' => t('Title'),
+		'#children' => t('Good luck my friend'),
+		'#collapsible' => TRUE,
+		'#collapsed' => TRUE,
+		);
+  		$form['submit'] = array(
+  			'#type' => 'submit',
+  			'#value' => 'Submit',
+  		);
+
+	return $form;
+}
+
+/**
+*	Form validate
+*/
+
+function my_forms_form_validate($form, &$form_state){
+	$phone = $form_state['values']['phone'];
+	$email_adress = $form_state['values']['email'];
+	$rule = $form_state['values']['rule'];
+	if($rule != 1){
+		form_set_error('rule', t('You must agree to the terms'));
+	}
+    if(strlen($phone) > 0 && !preg_match('/^[0-9-+]{4}-[0-9]{3}-[0-9]{3,4}-[0-9]{2}$/', $phone)){
+    	form_set_error('phone', t('Phone number must be in format +xxx-xxx-nnnn-nn.'));
+    }
+	if (filter_var($email_adress, FILTER_VALIDATE_EMAIL) == FALSE){
+       form_set_error('email', t('Email is not valid.'));
+	}
+}
+
+
+function my_forms_form_submit($form, &$form_state){
+	$first = $form_state['values']['first'];
+	$last = $form_state['values']['last'];
+	$nickname = $form_state['values']['nickname'];
+	$email_adress = $form_state['values']['email'];
+	$phone = $form_state['values']['phone'];
+	$message = $form_state['values']['message'];
+	$sex = $form_state['values']['settings'];
+	$country = $form_state['values']['country'];
+
+	drupal_set_message('The form has been submitted.'. '<br>' . 'First name: ' . $first . '<br>' . 'Last name: '. $last . '<br>' . 'Nickname: ' . $nickname . '<br>' . 'E-mail: ' . $email_adress . '<br>' . 'phone: ' . $phone . '<br>' . 'Sex : ' . $sex . '<br>' . 'Country : ' . $country.  '<br>' . 'Message: ' . $message);
+}
