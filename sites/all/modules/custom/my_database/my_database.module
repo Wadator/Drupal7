@@ -1,0 +1,106 @@
+<?php
+/**
+* Implement hook_menu
+*/
+function my_database_menu(){
+	$items['my_database/insert'] = array(
+		'title' => 'Page to check insert',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('my_database_form_insert'),
+		'access arguments' => array('administer site configuration'),
+		);
+	 $items['abc_database'] = array(
+    'title' => 'Table with data',
+    'page callback' => 'abc_database_table_data_page',
+    'access arguments' => array('administer site configuration'),
+ 	 );
+	return $items;
+}
+
+/**
+*	Insert 
+*/
+function my_database_form_insert($form, &$form_state){
+	$form = array();
+	$form['number'] = array(
+		'#title' => t('Integers'),
+		'#type' => 'textfield',
+		'#maxlength' => 10,
+		'#description' => t('Only integers'),
+		'#required' => TRUE,
+ 		);
+	$form['teaser'] = array(
+		'#title' => t('Teaser'),
+		'#type' => 'textfield',
+		'#maxlength' => 150,
+		'#required'  => TRUE,
+		);
+	$form['text'] = array(
+		'#title' => t('Text'),
+		'#type' => 'textarea',
+		'#required' => TRUE,
+		);
+	$form['submit'] = array(
+		'#type' => 'submit',
+		'#value' => t('Submit'),
+		);
+	return $form;
+}
+/**
+* Validation for form_insert
+*/
+function my_database_form_insert_validation($form, &$form_state){
+	if(drupal_strlen($form_state['values']['number'])> 10){
+		form_set_error('number', t('Field Teaser must be less than 10 symbols.'));
+	}
+	elseif(!ctype_digit($form_state['values']['number'])){
+		form_set_error('number', t('Only integers'));
+	}
+	if(drupal_strlen($form_state['values']['teaser'])> 150){
+		form_set_error('number', t('Field Teaser must be less than 150 symbols.'));
+	}
+}
+/**
+* Submit for form_insert
+*/
+function my_database_form_insert_submit($form, &$form_state){
+	$query = db_insert('my_table')
+	->fields(array(
+		'number' => $form_state['values']['number'],
+		'teaser' => $form_state['values']['teaser'],
+		'text' => $form_state['values']['text'],
+		))
+	->execute();
+	if($query > 0){
+		drupal_set_message(t('Data has been sent'));
+	}
+	else{
+		drupal_set_message(t('Data were not sent'));
+	}
+}
+
+/**
+*	Page with data
+*/
+function my_database_table_data_page(){
+  $header = array(t('ID'),t('Integer'),t('Teaser'),t('Text'),t('Action'));
+  $rows = array();
+  $query = db_select('my_table','t')
+    ->fields('t', array('id', 'number', 'teaser', 'text'))
+    ->execute();
+  while($value = $query->fetchAssoc()){
+    $rows[] = array(
+      $value['id'],
+      $value['number'],
+      $value['teaser'],
+      $value['text'],
+      '<div>'
+      .l(t('Delete'), "my_database/{$value['id']}/delete")
+      .'</div>'
+      .'<div>'
+      .l(t('Update'), "my_database/{$value['id']}/update")
+      .'</div>',
+    );
+  }
+  return theme('table', array('header' => $header, 'rows' => $rows));
+}

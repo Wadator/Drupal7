@@ -1,0 +1,39 @@
+<?php
+/**
+* Create database hook_schema
+*/
+
+function my_database_schema(){
+	$schema['my_table'] = array(
+  'description' => 'My own table of module',
+  'fields' => array(
+    'id' => array(
+     'description' =>  'Record identifier',
+     'type' => 'serial',
+      'unsigned' => TRUE,
+      'not null' => TRUE,
+    ),
+    'number' => array(
+     'description' => 'Field for integers',
+     'type' => 'int',
+     'unsigned' => TRUE,
+     'not null' => TRUE,
+     'default' => 0,
+  ),
+    'teaser' => array(
+      'description' => 'Field teaser',
+      'type' => 'varchar',
+      'length' => 150,
+      'not null' => TRUE,
+      'default' => '',
+    ),
+    'text' => array(
+      'description' => 'Text field',
+      'type' => 'text',
+      'not null' => FALSE,
+    ),
+  ),
+  'primary key' => array('id'),
+);
+  return $schema;
+}
