@@ -82,6 +82,10 @@ function theming_page(){
 
 }
 
+/**
+*
+*/
+
 function theme_custom_template($variables){
 	$output = '<div class="custom-template-wrapper">';
 	$output .=  '<strong class="body">';

@@ -119,7 +119,7 @@ function my_forms_form_validate($form, &$form_state){
 }
 
 /**
-* Submit Message 
+* Submit Message for form
 */
 function my_forms_form_submit($form, &$form_state){
 	$first = $form_state['values']['first'];
