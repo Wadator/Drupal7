@@ -22,7 +22,6 @@ function my_forms_form($form, &$form_state){
 		'#title' => t('First name'),
 		'#description' => "Please enter your first name.",
 		'#size' => 20,
-		// '#maxlength' => 20,
 		);
 
 		$form['last'] = array(
@@ -83,7 +82,8 @@ function my_forms_form($form, &$form_state){
   		'#title' => t('I agree to the Terms and Conditions'),
         '#return_value' => 1,
         '#default_value' => 0,
-  			);
+  		);
+
 	    $form['contact'] = array(
 		'#type' => 'fieldset',
 		'#title' => t('Title'),
@@ -91,6 +91,7 @@ function my_forms_form($form, &$form_state){
 		'#collapsible' => TRUE,
 		'#collapsed' => TRUE,
 		);
+
   		$form['submit'] = array(
   			'#type' => 'submit',
   			'#value' => 'Submit',
@@ -131,5 +132,14 @@ function my_forms_form_submit($form, &$form_state){
 	$sex = $form_state['values']['settings'];
 	$country = $form_state['values']['country'];
 
-	drupal_set_message('The form has been submitted.'. '<br>' . 'First name: ' . $first . '<br>' . 'Last name: '. $last . '<br>' . 'Nickname: ' . $nickname . '<br>' . 'E-mail: ' . $email_adress . '<br>' . 'phone: ' . $phone . '<br>' . 'Sex : ' . $sex . '<br>' . 'Country : ' . $country.  '<br>' . 'Message: ' . $message);
+	drupal_set_message(  
+		 'The form has been submitted.'. '<br>' .
+		 'First name: ' . $first . '<br>' . 
+		 'Last name: '. $last . '<br>' . 
+		 'Nickname: ' . $nickname . '<br>' . 
+		 'E-mail: ' . $email_adress . '<br>' . 
+		 'phone: ' . $phone . '<br>' . 
+		 'Sex : ' . $sex . '<br>' . 
+		 'Country: : ' . $country.  '<br>' . 
+		 'Message: ' . $message);
 }

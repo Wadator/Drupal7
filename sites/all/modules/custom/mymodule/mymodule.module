@@ -62,8 +62,7 @@
  		$block['subject'] = t('Message');
  		if(user_access('view block example')){
  			$block['content'] = t('Hello i block');
- 		}
- 		else{
+ 		}else{
  			$block['content'] = t('access to view this content is denied.');
  		}
  	}
@@ -76,10 +75,9 @@
 **/
 
 function mymodule_permission(){
-	return array('view block example'
-	 => array(
+	return array('view block example' => array(
 	 	'title' => t('Block access'),
-	 	'description' => t('Block access description')
-	),
+	 	'description' => t('Block access description'),
+		),
 	);
 }
